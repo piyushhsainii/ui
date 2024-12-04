@@ -2,7 +2,7 @@ import { Command } from "commander"
 
 
 export const add = new Command()
-    .name("init")
+    .name("add")
     .argument("[component...]")
     .action(async (components) => {
         if (!components[1]) {
