@@ -33,12 +33,6 @@ export async function main() {
     ui.parse()
 }
 
-async function writeToDir(data: any) {
-    const spinner = ora('Writing components.json...').start()               //display loading text
-    const targetPath = path.resolve(process.cwd(), 'components.json')       //specify the path to write the file
-    await fs.writeFile(targetPath, JSON.stringify(data, null, 2), () => { })
-    spinner.succeed()
-    return "sucess"
-}
+
 
 main();
