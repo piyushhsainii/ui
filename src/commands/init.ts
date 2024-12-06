@@ -16,8 +16,11 @@ export const init = new Command()
         if (!VerifyFramework()) return;
         const Data = await configureStyles()
         const { baseColor, CssVariables } = Data;
-        // if (!await WriteComponentsJson(baseColor, CssVariables)) return;
+        if (!await WriteComponentsJson(baseColor, CssVariables)) return;
         updateTailwindConfig(baseColor, CssVariables)
+        console.log(chalk.green('Success!') + " " + 'Project initialization completed.')
+        console.log('You may now add components.')
+        return;
     });
 let frameWork: string
 const VerifyFramework = () => {
