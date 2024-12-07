@@ -6,6 +6,7 @@ import fs from "fs";
 import stripJsonComments from "strip-json-comments";
 import inquirer from "inquirer"
 import { pathToFileURL } from "url";
+import { exec } from "child_process";
 
 export const init = new Command()
     .name("init")
@@ -18,6 +19,7 @@ export const init = new Command()
         const { baseColor, CssVariables } = Data;
         if (!await WriteComponentsJson(baseColor, CssVariables)) return;
         updateTailwindConfig(baseColor, CssVariables)
+        addPackages()
         console.log(chalk.green('Success!') + " " + 'Project initialization completed.')
         console.log('You may now add components.')
         return;
@@ -298,5 +300,16 @@ async function updateTailwindConfig(baseColor: string, CssVariables: string) {
                 updatingIndexCss.info("SData already exists in the file. ")
             }
         });
+    }
+}
+
+async function addPackages() {
+    // const packageJsonPath = path.resolve(process.cwd(), 'package.json')
+    const addPackage = ora("Adding packages").start()
+    try {
+        exec('npm install framer-motion', { cwd: process.cwd() })
+        addPackage.succeed()
+    } catch (error) {
+        addPackage.fail()
     }
 }
